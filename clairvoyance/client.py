@@ -37,7 +37,8 @@ class Client(IClient):
 
         async with self._semaphore:
             if not self._session:
-                self._session = aiohttp.ClientSession(headers=self._headers)
+                self._session = aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False),headers=self._headers)
+
 
             # Translate an existing document into a GraphQL request.
             gql_document = {'query': document} if document else None
